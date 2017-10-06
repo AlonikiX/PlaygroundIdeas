@@ -13,24 +13,24 @@
 		1811683B1F4BE65700CB2D05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1811683A1F4BE65700CB2D05 /* AppDelegate.swift */; };
 		181168441F4BE65700CB2D05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 181168421F4BE65700CB2D05 /* Main.storyboard */; };
 		181168491F4BE65700CB2D05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 181168471F4BE65700CB2D05 /* LaunchScreen.storyboard */; };
-		18119A2D1F6AB65600C0D395 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18119A2C1F6AB65600C0D395 /* UserInfo.swift */; };
+		18119A2D1F6AB65600C0D395 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18119A2C1F6AB65600C0D395 /* User.swift */; };
 		18119A331F6AB74D00C0D395 /* HandbooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18119A301F6AB74D00C0D395 /* HandbooksViewController.swift */; };
 		18119A351F6AB7FD00C0D395 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18119A341F6AB7FD00C0D395 /* LogoutViewController.swift */; };
 		181E6ACB1F61A94500C7BFEF /* CommonNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E6ACA1F61A94500C7BFEF /* CommonNavigationController.swift */; };
 		182A1D301F6AD61E00F26FD9 /* HandbookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A1D2F1F6AD61E00F26FD9 /* HandbookTableViewCell.swift */; };
 		182D846F1F6056E300006D0C /* HTTPMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D846E1F6056E300006D0C /* HTTPMethods.swift */; };
-		182D84741F61606C00006D0C /* HTTPResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D84731F61606C00006D0C /* HTTPResponseHandler.swift */; };
+		182D84741F61606C00006D0C /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D84731F61606C00006D0C /* HTTPHelper.swift */; };
+		18313DC61F87352F0082D34D /* ChildrenElements+SwiftSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18313DC51F87352F0082D34D /* ChildrenElements+SwiftSoup.swift */; };
+		18313DC81F87A2140082D34D /* FileIO+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18313DC71F87A2140082D34D /* FileIO+SwiftyJSON.swift */; };
 		184190F51F58598F0020AFBE /* PlaygroundIdeasAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 184190E51F58598E0020AFBE /* PlaygroundIdeasAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		184190F81F58598F0020AFBE /* PlaygroundIdeasAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184190E31F58598E0020AFBE /* PlaygroundIdeasAPI.framework */; };
 		184190F91F58598F0020AFBE /* PlaygroundIdeasAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 184190E31F58598E0020AFBE /* PlaygroundIdeasAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		184191041F585A670020AFBE /* PlaygroundIdeas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184191031F585A670020AFBE /* PlaygroundIdeas.swift */; };
 		184191061F585CDC0020AFBE /* Authentication+PlaygroundIdeas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184191051F585CDC0020AFBE /* Authentication+PlaygroundIdeas.swift */; };
+		184631221F8601720003261A /* Slide+UITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184631211F8601720003261A /* Slide+UITabBarController.swift */; };
 		1898ACC11F6E62460067D698 /* ChapterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACC01F6E62460067D698 /* ChapterTableViewController.swift */; };
 		1898ACC31F6E67B30067D698 /* ChapterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACC21F6E67B30067D698 /* ChapterTableViewCell.swift */; };
 		1898ACC61F6EB4230067D698 /* Handbook+PlaygroundIdeas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACC51F6EB4230067D698 /* Handbook+PlaygroundIdeas.swift */; };
-		1898ACC91F6EBAC70067D698 /* playground_builders_handbook.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 1898ACC81F6EBAC70067D698 /* playground_builders_handbook.pdf */; };
-		1898ACCB1F6EBACF0067D698 /* safety_manual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 1898ACCA1F6EBACF0067D698 /* safety_manual.pdf */; };
-		1898ACCD1F6EBAD60067D698 /* starter_kit.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 1898ACCC1F6EBAD60067D698 /* starter_kit.pdf */; };
 		1898ACCF1F6EC6D50067D698 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACCE1F6EC6D50067D698 /* PDFViewController.swift */; };
 		1898ACD51F71081A0067D698 /* Handbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACD41F71081A0067D698 /* Handbook.swift */; };
 		1898ACFA1F71524C0067D698 /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1898ACF91F71524C0067D698 /* PDFPageViewController.swift */; };
@@ -75,24 +75,24 @@
 		181168431F4BE65700CB2D05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		181168481F4BE65700CB2D05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1811684A1F4BE65700CB2D05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18119A2C1F6AB65600C0D395 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		18119A2C1F6AB65600C0D395 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		18119A301F6AB74D00C0D395 /* HandbooksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandbooksViewController.swift; sourceTree = "<group>"; };
 		18119A341F6AB7FD00C0D395 /* LogoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
 		181E6ACA1F61A94500C7BFEF /* CommonNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonNavigationController.swift; sourceTree = "<group>"; };
 		182A1D2F1F6AD61E00F26FD9 /* HandbookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandbookTableViewCell.swift; sourceTree = "<group>"; };
 		182D846E1F6056E300006D0C /* HTTPMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethods.swift; sourceTree = "<group>"; };
-		182D84731F61606C00006D0C /* HTTPResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseHandler.swift; sourceTree = "<group>"; };
+		182D84731F61606C00006D0C /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		18313DC51F87352F0082D34D /* ChildrenElements+SwiftSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChildrenElements+SwiftSoup.swift"; sourceTree = "<group>"; };
+		18313DC71F87A2140082D34D /* FileIO+SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileIO+SwiftyJSON.swift"; sourceTree = "<group>"; };
 		184190E31F58598E0020AFBE /* PlaygroundIdeasAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlaygroundIdeasAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		184190E51F58598E0020AFBE /* PlaygroundIdeasAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaygroundIdeasAPI.h; sourceTree = "<group>"; };
 		184190E61F58598E0020AFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		184191031F585A670020AFBE /* PlaygroundIdeas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundIdeas.swift; sourceTree = "<group>"; };
 		184191051F585CDC0020AFBE /* Authentication+PlaygroundIdeas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Authentication+PlaygroundIdeas.swift"; sourceTree = "<group>"; };
+		184631211F8601720003261A /* Slide+UITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Slide+UITabBarController.swift"; sourceTree = "<group>"; };
 		1898ACC01F6E62460067D698 /* ChapterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterTableViewController.swift; sourceTree = "<group>"; };
 		1898ACC21F6E67B30067D698 /* ChapterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterTableViewCell.swift; sourceTree = "<group>"; };
 		1898ACC51F6EB4230067D698 /* Handbook+PlaygroundIdeas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Handbook+PlaygroundIdeas.swift"; sourceTree = "<group>"; };
-		1898ACC81F6EBAC70067D698 /* playground_builders_handbook.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = playground_builders_handbook.pdf; sourceTree = "<group>"; };
-		1898ACCA1F6EBACF0067D698 /* safety_manual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = safety_manual.pdf; sourceTree = "<group>"; };
-		1898ACCC1F6EBAD60067D698 /* starter_kit.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = starter_kit.pdf; sourceTree = "<group>"; };
 		1898ACCE1F6EC6D50067D698 /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		1898ACD41F71081A0067D698 /* Handbook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Handbook.swift; sourceTree = "<group>"; };
 		1898ACF91F71524C0067D698 /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
@@ -168,12 +168,11 @@
 		181168391F4BE65700CB2D05 /* Playground Ideas */ = {
 			isa = PBXGroup;
 			children = (
-				1898ACC71F6EBAAF0067D698 /* Handbooks */,
 				180159851F4DB7CE000A3DA6 /* Playground Ideas-Bridging-Header.h */,
 				1811683A1F4BE65700CB2D05 /* AppDelegate.swift */,
 				18119A2B1F6AB63700C0D395 /* Model */,
 				18BDAB341F61756A002FD7F2 /* View */,
-				182D84721F61603600006D0C /* HTTPHandler */,
+				182D84721F61603600006D0C /* HTTPHelper */,
 				1801598C1F4DBA3B000A3DA6 /* ViewController */,
 				18ED30881F57E79600E7E9E7 /* Extension */,
 				1811684A1F4BE65700CB2D05 /* Info.plist */,
@@ -185,7 +184,7 @@
 		18119A2B1F6AB63700C0D395 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				18119A2C1F6AB65600C0D395 /* UserInfo.swift */,
+				18119A2C1F6AB65600C0D395 /* User.swift */,
 				1898ACD41F71081A0067D698 /* Handbook.swift */,
 			);
 			name = Model;
@@ -202,12 +201,12 @@
 			name = Handbook;
 			sourceTree = "<group>";
 		};
-		182D84721F61603600006D0C /* HTTPHandler */ = {
+		182D84721F61603600006D0C /* HTTPHelper */ = {
 			isa = PBXGroup;
 			children = (
-				182D84731F61606C00006D0C /* HTTPResponseHandler.swift */,
+				182D84731F61606C00006D0C /* HTTPHelper.swift */,
 			);
-			name = HTTPHandler;
+			name = HTTPHelper;
 			sourceTree = "<group>";
 		};
 		184190E41F58598E0020AFBE /* PlaygroundIdeasAPI */ = {
@@ -232,16 +231,6 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
-		1898ACC71F6EBAAF0067D698 /* Handbooks */ = {
-			isa = PBXGroup;
-			children = (
-				1898ACCC1F6EBAD60067D698 /* starter_kit.pdf */,
-				1898ACCA1F6EBACF0067D698 /* safety_manual.pdf */,
-				1898ACC81F6EBAC70067D698 /* playground_builders_handbook.pdf */,
-			);
-			name = Handbooks;
-			sourceTree = "<group>";
-		};
 		1898ACF81F7151EC0067D698 /* PDFReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +253,9 @@
 			isa = PBXGroup;
 			children = (
 				18ED30891F57E7E200E7E9E7 /* Alert+UIViewController.swift */,
+				184631211F8601720003261A /* Slide+UITabBarController.swift */,
+				18313DC51F87352F0082D34D /* ChildrenElements+SwiftSoup.swift */,
+				18313DC71F87A2140082D34D /* FileIO+SwiftyJSON.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -359,7 +351,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = PlaygroundIdeasQuoll;
 				TargetAttributes = {
 					181168361F4BE65700CB2D05 = {
@@ -401,11 +393,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				181168491F4BE65700CB2D05 /* LaunchScreen.storyboard in Resources */,
-				1898ACCB1F6EBACF0067D698 /* safety_manual.pdf in Resources */,
 				1801597E1F4DAADB000A3DA6 /* Assets.xcassets in Resources */,
-				1898ACCD1F6EBAD60067D698 /* starter_kit.pdf in Resources */,
 				181168441F4BE65700CB2D05 /* Main.storyboard in Resources */,
-				1898ACC91F6EBAC70067D698 /* playground_builders_handbook.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,12 +417,16 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Playground Ideas/Pods-Playground Ideas-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,9 +474,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				182D84741F61606C00006D0C /* HTTPResponseHandler.swift in Sources */,
+				182D84741F61606C00006D0C /* HTTPHelper.swift in Sources */,
 				1898ACC31F6E67B30067D698 /* ChapterTableViewCell.swift in Sources */,
 				18119A331F6AB74D00C0D395 /* HandbooksViewController.swift in Sources */,
+				184631221F8601720003261A /* Slide+UITabBarController.swift in Sources */,
 				1801597C1F4DA4C4000A3DA6 /* LoginViewController.swift in Sources */,
 				1898ACC11F6E62460067D698 /* ChapterTableViewController.swift in Sources */,
 				182A1D301F6AD61E00F26FD9 /* HandbookTableViewCell.swift in Sources */,
@@ -492,8 +486,10 @@
 				1898ACCF1F6EC6D50067D698 /* PDFViewController.swift in Sources */,
 				1898ACD51F71081A0067D698 /* Handbook.swift in Sources */,
 				FD00D0CA1F6D4B8900DD9BE7 /* DesignViewController.m in Sources */,
+				18313DC61F87352F0082D34D /* ChildrenElements+SwiftSoup.swift in Sources */,
 				1811683B1F4BE65700CB2D05 /* AppDelegate.swift in Sources */,
-				18119A2D1F6AB65600C0D395 /* UserInfo.swift in Sources */,
+				18119A2D1F6AB65600C0D395 /* User.swift in Sources */,
+				18313DC81F87A2140082D34D /* FileIO+SwiftyJSON.swift in Sources */,
 				18119A351F6AB7FD00C0D395 /* LogoutViewController.swift in Sources */,
 				1898ACFA1F71524C0067D698 /* PDFPageViewController.swift in Sources */,
 				181E6ACB1F61A94500C7BFEF /* CommonNavigationController.swift in Sources */,
@@ -553,7 +549,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -561,7 +559,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -605,7 +607,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -613,7 +617,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

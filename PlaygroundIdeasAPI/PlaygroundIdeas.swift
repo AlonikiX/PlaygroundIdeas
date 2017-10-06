@@ -20,7 +20,7 @@ public class PlaygroundIdeas: NSObject {
         return URL(string: PlaygroundIdeas.baseAPIDomainURL + api)
     }
     
-    static func makeHTTPURLRequest(method: HTTPMethods, url: URL, params: [String : String]?) -> URLRequest {
+    static func makeHTTPURLRequest(method: HTTPMethods, url: URL, params: [String : Any]?) -> URLRequest {
         
         var request : URLRequest?
         

@@ -25,7 +25,7 @@ class LogoutViewController: UIViewController {
             (data, response, error) in
             
             DispatchQueue.main.async {
-                let handler = HTTPResponseHandler()
+                let handler = HTTPHelper()
                 handler.handleHTTPResponse(data: data, response: response, error: error, successAction: {
                     let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
                     self.present(loginViewController!, animated: true, completion: nil)

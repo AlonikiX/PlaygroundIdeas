@@ -10,78 +10,71 @@ import Foundation
 import SwiftyJSON
 
 public class Handbook {
+    
     public class Chapter {
-//        let id        : Int
+        let id        : Int
         let chapter   : String
         let startPage : Int
         let pages     : Int
+        var completed     : Bool
         
         init(json : JSON) {
-//            self.id        = json["id"].int!
+            self.id        = json["id"].int!
             self.chapter   = json["chapter"].string!
             self.startPage = json["startPage"].int!
             self.pages     = json["pages"].int!
+            self.completed = json["completed"].boolValue
         }
     }
     
-//    let id            : Int
+    let id            : Int
     let handbook      : String
     let slag          : String
     let chapters      : [Chapter]
     let pages         : Int
+    var downloaded    : Bool
     
     init(json: JSON) {
-        var chapters : [Chapter] = []
+        var chapters                                 = Array<Chapter>()
         for chapter in json["chapters"].arrayValue {
-            chapters.append(Chapter(json: chapter))
+            chapters.append(Chapter(json : chapter))
         }
-//        self.id       = json["id"].int!
-        self.handbook = json["handbook"].string!
-        self.slag     = json["slag"].string!
-        self.chapters = chapters
-        self.pages    = json["pages"].int!
+        self.id                                      = json["id"].int!
+        self.handbook                                = json["handbook"].string!
+        self.slag                                    = json["slag"].string!
+        self.chapters                                = chapters
+        self.pages                                   = json["pages"].int!
+        self.downloaded                              = false
     }
     
     convenience init(jsonString: String) {
-        let json = JSON.parse(jsonString)
+        let json = JSON(jsonString)
         self.init(json: json)
+    }
+    
+    public func getChapter(by pageIndex: Int) -> Chapter? {
+        let acutalIndex = pageIndex + 1;
+        
+        for chapter in self.chapters {
+            if acutalIndex >= chapter.startPage,
+                acutalIndex < chapter.startPage + chapter.pages {
+                return chapter
+            }
+        }
+        
+        return nil
+    }
+    
+    public func setDownloaded(byChecking localHandbooks: [Handbook]?) {
+        guard localHandbooks != nil else {
+            return
+        }
+        for localHandbook in localHandbooks! {
+            if self.id == localHandbook.id {
+                self.downloaded = true
+                return
+            }
+        }
     }
 }
 
-
-/*
-var test = [["handbook":"starter_kit",
-             "chapters":[["chapter":"chapter1",
-                          "startPage":1,
-                          "pages":2],
-                         ["chapter":"chapter2",
-                          "startPage":3,
-                          "pages":2]],
-             "pages":4],
-            ["handbook":"safety_manual",
-             "chapters":[["chapter":"chapter1",
-                          "startPage":1,
-                          "pages":2],
-                         ["chapter":"chapter2",
-                          "startPage":3,
-                          "pages":2],
-                         ["chapter":"chapter2",
-                          "startPage":5,
-                          "pages":2]],
-             "pages":6],
-            ["handbook":"playground_builders_handbook",
-             "chapters":[["chapter":"chapter1",
-                          "startPage":1,
-                          "pages":2],
-                         ["chapter":"chapter2",
-                          "startPage":3,
-                          "pages":2]],
-             "pages":4],
-]
-
-lazy var handbooks = [["handbook":String(),
-                       "chapters":[["chapter":String(),
-                                    "startPage":Int(),
-                                    "pages":Int()]],
-                       "pages":Int()],]
-*/

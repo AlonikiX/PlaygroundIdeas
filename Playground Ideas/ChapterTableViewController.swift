@@ -12,7 +12,7 @@ class ChapterTableViewController: UITableViewController {
 
     var handbook : Handbook?
     
-    var cellHeight : CGFloat = 30
+    var cellHeight : CGFloat = 50
     
     var actualHeight : CGFloat {
         get{
@@ -56,7 +56,10 @@ class ChapterTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChapterCell", for: indexPath) as! ChapterTableViewCell
         
         // Configure the cell...
-        cell.chapter = handbook!.chapters[indexPath.row].chapter
+        let chapter = handbook!.chapters[indexPath.row]
+        cell.chapterLabel.text = chapter.chapter
+        cell.statusLabel.isHidden = !chapter.completed
+        
         if indexPath.row % 2 == 0 {
             cell.backgroundColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.05)
             cell.chapterLabel.textColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.8)

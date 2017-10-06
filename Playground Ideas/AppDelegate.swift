@@ -16,9 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let cache = URLCache(memoryCapacity: 100 * 1024 * 1024, diskCapacity: 300 * 1024 * 1024, diskPath: "/tmp")
-        URLCache.shared = cache
-        URLCache.shared.removeAllCachedResponses()
+//        do {
+//            let path = try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+//            let cache = URLCache(memoryCapacity: 100 * 1024 * 1024, diskCapacity: 300 * 1024 * 1024, diskPath: path.path)
+//            URLCache.shared = cache
+//            URLCache.shared.removeAllCachedResponses()
+//        }catch {
+//            fatalError("Cannot create cache directory!")
+//        }
         return true
     }
 

@@ -15,15 +15,18 @@ class HandbooksViewController: UITableViewController {
         case online = 0
         case download = 1
     }
+
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    let rowDefaultHeight : CGFloat    = 50
+    let rowDefaultHeight : CGFloat    = 100
     let rowDefaultState               = false
     var expandedData     : [Bool]     = []
     var rowHeightData    : [CGFloat]  = []
     
     var handbooks        : [Handbook] = []
+    var onlines          : [Handbook] = []
+    var downloads        : [Handbook] = []
     
     var readingPath : (Handbook, Int, Int)?
     
@@ -37,29 +40,45 @@ class HandbooksViewController: UITableViewController {
         presentingSection = .online
         
         if !isInitiated {
-            let indicator = UIActivityIndicatorView()
-            showActivity(indicator: indicator, block: true)
             
-            PlaygroundIdeas.HandbookAPI.requestHandbooks(finished: { (data, response, error) in
-                
-                DispatchQueue.main.async {
-                    let handler = HTTPResponseHandler()
-                    handler.handleHTTPResponse(data: data, response: response, error: error, successAction: {
-                        let json = JSON(data!)
-                        for jbook in json.arrayValue {
-                            self.handbooks.append(Handbook(json: jbook))
-                        }
-                    })
-                    self.expandedData = Array(repeating: self.rowDefaultState, count: self.handbooks.count)
-                    self.rowHeightData = Array(repeating: self.rowDefaultHeight, count: self.handbooks.count)
-                    self.tableView.reloadData()
-                    self.dismissActivity(indicator: indicator)
+            //load downloaded handbooks
+            let path = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("handbook/scheme.json").path
+            if let jbooks = JSON.loadJSON(from: path)?.array {
+                for jbook in jbooks {
+                    self.downloads.append(Handbook(json: jbook))
                 }
-            })
+            }
+            
+            //load online handbooks
+            if User.currentUser.isLogged {
+                let indicator = UIActivityIndicatorView()
+                showActivity(indicator: indicator, block: true)
+                
+                PlaygroundIdeas.HandbookAPI.requestHandbooks(userID: User.currentUser.id!, finished: { (data, response, error) in
+                    
+                    DispatchQueue.main.async {
+                        let helper = HTTPHelper()
+                        helper.handleHTTPResponse(data: data, response: response, error: error, successAction: {
+                            let json = JSON(data!)
+                            for jbook in json.arrayValue {
+                                let handbook = Handbook(json: jbook)
+                                handbook.setDownloaded(byChecking: self.downloads)
+                                self.onlines.append(handbook)
+                            }
+                        })
+                        self.handbooks = self.onlines
+                        
+                        self.segmentedControl.selectedSegmentIndex = 0
+                        self.segmentedControl.sendActions(for: .valueChanged)
+                        
+                        self.dismissActivity(indicator: indicator)
+                    }
+                })
+            }else {
+                self.segmentedControl.selectedSegmentIndex = 1
+                self.segmentedControl.sendActions(for: .valueChanged)
+            }
         }
-        
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.sendActions(for: .valueChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(jumpToChapter), name: NSNotification.Name(rawValue: "ReadChapter"), object: nil)
     }
@@ -73,7 +92,9 @@ class HandbooksViewController: UITableViewController {
     @IBAction func switchViews(_ sender: UISegmentedControl) {
         presentingSection = HandbookViewScetion(rawValue: segmentedControl.selectedSegmentIndex)!
         if presentingSection == .online {
+            self.handbooks = self.onlines
         }else {
+            self.handbooks = self.downloads
         }
         expandedData = Array(repeating: rowDefaultState, count: handbooks.count)
         rowHeightData = Array(repeating: rowDefaultHeight, count: handbooks.count)
@@ -116,7 +137,7 @@ class HandbooksViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if expandedData[indexPath.row] {
             expandedData[indexPath.row] = false
-            rowHeightData[indexPath.row] = 50
+            rowHeightData[indexPath.row] = rowDefaultHeight
         }else {
             expandedData[indexPath.row] = true
             rowHeightData[indexPath.row] = cell.actualHeight
@@ -142,6 +163,7 @@ class HandbooksViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         let destVC = segue.destination as! PDFPageViewController
         destVC.readingPath = readingPath
+        destVC.readingMode = presentingSection!.rawValue
     }
  
 

@@ -8,84 +8,97 @@
 
 import UIKit
 import PlaygroundIdeasAPI
+import SwiftSoup
 
 class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
-    var url : URL?
-    var readingPath : (handbook: Handbook,chapterIndex: Int, pageIndex: Int)?
+    var readingMode                   = 0
+    var readingPath    : (handbook : Handbook, chapterIndex : Int, pageIndex : Int)?
     var readingChapter : Handbook.Chapter?
-    var pageRequests : [URLRequest] = []
+    var pagesData   : [Any] = []
+    
+    var currentVC : PDFViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        for chapter in readingPath!.handbook.chapters {
-            let pageCount = chapter.pages
-            for pageIndex in 0..<pageCount {
-                let page = pageIndex + chapter.startPage
-                let request = PlaygroundIdeas.HandbookAPI.Request(handbookSlag: readingPath!.handbook.slag, page: page)
-                pageRequests.append(request)
+        if readingMode == 0 {
+            //online reading mode, prepare url requests for pages
+            for chapter in readingPath!.handbook.chapters {
+                let pageCount = chapter.pages
+                for pageIndex in 0..<pageCount {
+                    let page = pageIndex + chapter.startPage
+                    let request = PlaygroundIdeas.HandbookAPI.Request(handbookSlag: readingPath!.handbook.slag, page: page)
+                    pagesData.append(request)
+                }
             }
+            
+        }else {
+            //download reading mode, prepare html for pages
+            do {
+                var file = try FileManager().url(for: .documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: false)
+                file.appendPathComponent("handbook/" + readingPath!.handbook.slag)
+                print(file.path)
+                let baseURL = URL.init(fileURLWithPath: file.path)
+                let html = try String.init(contentsOf: baseURL)
+                pagesData = SwiftSoup.separate(elementByID: "page-container", inHTML: html)
+                
+            }catch {
+                print("Error: Cannot load files!")
+            }
+            
         }
+        
+        
         readingChapter = readingPath!.handbook.chapters[readingPath!.chapterIndex]
         
         print(readingPath!)
         // Do any additional setup after loading the view, typically from a nib.
         // Configure the page view controller and add it as a child view controller.
-        self.delegate = self
+        self.delegate   = self
         self.dataSource = self
         
         let startingViewController: PDFViewController = self.viewControllerAtIndex(readingPath!.pageIndex - 1, storyboard: self.storyboard!)!
         let viewControllers = [startingViewController]
         self.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
-        
-//        self.didMove(toParentViewController: self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func flipBackward(readingPage : Int) -> Int{
-        if readingPage == 0 {
-            return NSNotFound
-        }
-        if readingPage == readingChapter!.startPage - 1 {
-            readingPath!.chapterIndex -= 1
-            readingChapter = readingPath!.handbook.chapters[readingPath!.chapterIndex]
-        }
-        readingPath!.pageIndex -= 1
-        return readingPage - 1
-    }
-    
-    func flipForward(readingPage : Int) -> Int{
-        if readingPage == readingPath!.handbook.pages - 1 {
-            return NSNotFound
-        }
-        if readingPage == readingChapter!.startPage + readingChapter!.pages - 2 {
-            readingPath!.chapterIndex += 1
-            readingChapter = readingPath!.handbook.chapters[readingPath!.chapterIndex]
-        }
-        readingPath!.pageIndex += 1
-        return readingPage + 1
-    }
 
     func viewControllerAtIndex(_ index: Int, storyboard: UIStoryboard) -> PDFViewController? {
         // Return the data view controller for the given index.
-        if (self.pageRequests.count == 0) || (index >= self.pageRequests.count) {
+        if (self.pagesData.count == 0) || (index >= self.pagesData.count) {
             return nil
         }
         
         // Create a new view controller and pass suitable data.
         let pdfViewController = storyboard.instantiateViewController(withIdentifier: "PDFViewController") as! PDFViewController
-        pdfViewController.pageRequest = self.pageRequests[index]
+        pdfViewController.pageData = self.pagesData[index]
         pdfViewController.index = index
+        
+        if let currentChapter = readingPath!.handbook.getChapter(by: index) {
+            if readingChapter !== currentChapter {
+                if !readingChapter!.completed {
+                    readingChapter!.completed = true
+                    PlaygroundIdeas.HandbookAPI.record(userID: User.currentUser.id!, readingHandbook: readingPath!.handbook.id, completedChapter: readingChapter!.id, finished: {_,_,_ in return})
+                }
+                readingChapter = currentChapter
+            }
+        }
+        
+        if index == pagesData.count - 1 {
+            if !readingChapter!.completed {
+                readingChapter!.completed = true
+                PlaygroundIdeas.HandbookAPI.record(userID: User.currentUser.id!, readingHandbook: readingPath!.handbook.id, completedChapter: readingChapter!.id, finished: {_,_,_ in return})
+            }
+        }
+        currentVC = pdfViewController
         return pdfViewController
     }
     
     func indexOfViewController(_ viewController: PDFViewController) -> Int {
-        // Return the index of the given data view controller.
-        // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
         return viewController.index
     }
     
@@ -108,7 +121,7 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
         }
         
         index += 1
-        if index == self.pageRequests.count {
+        if index == self.pagesData.count {
             return nil
         }
         return self.viewControllerAtIndex(index, storyboard: viewController.storyboard!)
@@ -116,7 +129,7 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
 
     // MARK: - UIPageViewController delegate methods
     
- /*   func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
+    func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
         if (orientation == .portrait) || (orientation == .portraitUpsideDown) || (UIDevice.current.userInterfaceIdiom == .phone) {
             // In portrait orientation or on iPhone: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to true, so set it to false here.
             let currentViewController = self.viewControllers![0]
@@ -142,7 +155,7 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
         self.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
         
         return .mid
-    }*/
+    }
 
     /*
     // MARK: - Navigation

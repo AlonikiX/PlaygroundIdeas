@@ -11,15 +11,9 @@ import UIKit
 class ChapterTableViewCell: UITableViewCell {
 
     @IBOutlet weak var chapterLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     
-    var chapter : String {
-        get {
-            return chapterLabel.text!
-        }
-        set {
-            self.chapterLabel.text = newValue
-        }
-    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

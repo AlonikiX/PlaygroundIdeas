@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import PlaygroundIdeasAPI
+import SwiftyJSON
 
 class HandbookTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var downloadButton: UIButton!
     
     @IBOutlet weak var closedView: UIView!
     @IBOutlet weak var openedView: UIView!
@@ -45,5 +48,40 @@ class HandbookTableViewCell: UITableViewCell {
             chapterTableView.delegate = chapterTableViewController
         }
     }
+    
+    @IBAction func download(_ sender: Any) {
+        let url = PlaygroundIdeas.HandbookAPI.downloadLink(of: handbook!.slag)
+        let destination = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("handbook")
+        do {
+            try FileManager().createDirectory(at: destination, withIntermediateDirectories: true, attributes: nil)
+            let helper = HTTPHelper()
+            helper.download(fileAtURL: url, to: destination)
+            print(destination.path)
+        }catch {
+            print("ERROR: cannot create directory.")
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

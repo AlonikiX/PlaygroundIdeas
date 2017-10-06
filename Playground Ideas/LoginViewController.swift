@@ -53,10 +53,10 @@ class LoginViewController: UIViewController {
                 data, response, error in
                 
                 DispatchQueue.main.async {
-                    let handler = HTTPResponseHandler()
+                    let handler = HTTPHelper()
                     handler.handleHTTPResponse(data: data, response: response, error: error, successAction: {
                         let userCredential = JSON(data: data!)
-                        UserInfo.sharedUserInfo().update(userCredential: userCredential)
+                        User.currentUser.update(userCredential: userCredential)
                         self.performSegue(withIdentifier: "LoginSuccessSegue", sender: nil)
                     })
                     self.dismissActivity(indicator: indicator)
