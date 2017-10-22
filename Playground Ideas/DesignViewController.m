@@ -35,7 +35,6 @@
     
     [self loadTableView];
     
-    // Do any additional setup after loading the view.
     [_SegmentedControl addTarget:self action:@selector(segmentValueChanged:) forControlEvents:UIControlEventValueChanged];
     _SegmentedControl.selectedSegmentIndex = 0;
     
@@ -96,14 +95,6 @@
     
     [popView addSubview:addToProjectBtn];
     
-//    for(int i = 0; i < _dataArr.count; i++) {
-//        //NSMutableDictionary *dictionary = _dataArr[i];
-//        if ([[_dataArr[i] objectForKey:@"isFavorite"] isEqual:@"NO"]) {
-//            [_dataArr[i] setValue:@"YES" forKey:@"isFavorite"];
-//            [self loadTableView];
-//            return;
-//        }
-//    }
 }
 
 - (void)addFavourite {
@@ -131,7 +122,7 @@
 
 - (void)loadTableView {
     if (designTable == nil) {
-        designTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        designTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50) style:UITableViewStylePlain];
         designTable.delegate = self;
         designTable.dataSource = self;
         designTable.separatorStyle = UITableViewCellSeparatorStyleNone;

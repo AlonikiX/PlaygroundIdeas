@@ -11,6 +11,9 @@ import PlaygroundIdeasAPI
 import SwiftyJSON
 
 class HandbooksViewController: UITableViewController {
+    
+    let networkHelper = NetworkReachabilityHelper.shared
+    
     enum HandbookViewScetion : Int {
         case online = 0
         case download = 1
@@ -19,7 +22,7 @@ class HandbooksViewController: UITableViewController {
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    let rowDefaultHeight : CGFloat    = 100
+    let rowDefaultHeight : CGFloat    = 120
     let rowDefaultState               = false
     var expandedData     : [Bool]     = []
     var rowHeightData    : [CGFloat]  = []
@@ -42,38 +45,40 @@ class HandbooksViewController: UITableViewController {
         if !isInitiated {
             
             //load downloaded handbooks
-            let path = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("handbook/scheme.json").path
-            if let jbooks = JSON.loadJSON(from: path)?.array {
-                for jbook in jbooks {
-                    self.downloads.append(Handbook(json: jbook))
-                }
+            if FileManager.default.fileExists(atPath: Handbook.ArchivePath.path) {
+                downloads = NSKeyedUnarchiver.unarchiveObject(withFile: Handbook.ArchivePath.path) as! [Handbook]
             }
             
             //load online handbooks
             if User.currentUser.isLogged {
-                let indicator = UIActivityIndicatorView()
-                showActivity(indicator: indicator, block: true)
-                
-                PlaygroundIdeas.HandbookAPI.requestHandbooks(userID: User.currentUser.id!, finished: { (data, response, error) in
+                if networkHelper.connection != .none {
+                    let indicator = UIActivityIndicatorView()
+                    showActivity(indicator: indicator, block: true)
                     
-                    DispatchQueue.main.async {
-                        let helper = HTTPHelper()
-                        helper.handleHTTPResponse(data: data, response: response, error: error, successAction: {
-                            let json = JSON(data!)
-                            for jbook in json.arrayValue {
-                                let handbook = Handbook(json: jbook)
-                                handbook.setDownloaded(byChecking: self.downloads)
-                                self.onlines.append(handbook)
-                            }
-                        })
-                        self.handbooks = self.onlines
+                    PlaygroundIdeas.HandbookAPI.requestHandbooks(userID: User.currentUser.id!, finished: { (data, response, error) in
                         
-                        self.segmentedControl.selectedSegmentIndex = 0
-                        self.segmentedControl.sendActions(for: .valueChanged)
-                        
-                        self.dismissActivity(indicator: indicator)
-                    }
-                })
+                        DispatchQueue.main.async {
+                            let helper = HTTPHelper()
+                            helper.handleHTTPResponse(data: data, response: response, error: error, successAction: {
+                                let json = JSON(data!)
+                                for jbook in json.arrayValue {
+                                    let handbook = Handbook(json: jbook)
+                                    handbook.setDownloaded(byChecking: self.downloads)
+                                    self.onlines.append(handbook)
+                                }
+                            })
+                            self.handbooks = self.onlines
+                            
+                            self.segmentedControl.selectedSegmentIndex = 0
+                            self.segmentedControl.sendActions(for: .valueChanged)
+                            
+                            self.dismissActivity(indicator: indicator)
+                        }
+                    })
+                }else {
+                    showAlert(title: "Error", message: "Network is invailable, please connect to the internet first.")
+                    return
+                }
             }else {
                 self.segmentedControl.selectedSegmentIndex = 1
                 self.segmentedControl.sendActions(for: .valueChanged)
@@ -81,7 +86,10 @@ class HandbooksViewController: UITableViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(jumpToChapter), name: NSNotification.Name(rawValue: "ReadChapter"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(saveHandbookStructure), name: NSNotification.Name(rawValue: "SaveHandbookStructure"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishChapter), name: NSNotification.Name(rawValue: "FinishChapter"), object: nil)
     }
+    
     
     // MARK: - IBActions
     /**
@@ -93,6 +101,12 @@ class HandbooksViewController: UITableViewController {
         presentingSection = HandbookViewScetion(rawValue: segmentedControl.selectedSegmentIndex)!
         if presentingSection == .online {
             self.handbooks = self.onlines
+            
+            if networkHelper.connection == .none {
+                showAlert(title: "Error", message: "Network is invailable, please connect to the internet first.")
+                return
+            }
+            
         }else {
             self.handbooks = self.downloads
         }
@@ -122,15 +136,31 @@ class HandbooksViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HandbookCell", for: indexPath) as! HandbookTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "HandbookCell", for: indexPath) as? HandbookTableViewCell
+        if cell == nil {
+            cell = HandbookTableViewCell(style: .default, reuseIdentifier: nil)
+        }
+        
+        if indexPath.row % 2 == 0 {
+            cell!.closedView.backgroundColor = UIColor(red: 0.962, green: 0.992, blue: 0.999, alpha: 1)
+        }else {
+            cell!.closedView.backgroundColor = UIColor.white
+        }
         
         // Configure the cell...
         let handbook = handbooks[indexPath.row]
-        cell.handbook = handbook
-        cell.titleLabel.text = handbooks[indexPath.row].handbook
+        cell!.refreshCellData(with: handbook)
         
-        return cell
+        
+        
+        return cell!
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let myCell = cell as! HandbookTableViewCell
+        myCell.layout()
+    }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HandbookTableViewCell
@@ -142,12 +172,42 @@ class HandbooksViewController: UITableViewController {
             expandedData[indexPath.row] = true
             rowHeightData[indexPath.row] = cell.actualHeight
         }
+        
+        
         tableView.beginUpdates()
         tableView.endUpdates()
     }
 
     
     // MARK: - Navigation
+    
+    //refresh cell if finished a chapter
+    func finishChapter(notification: Notification) {
+        let handbook = notification.userInfo!["handbook"] as! Handbook
+        let chapter = notification.userInfo!["chapter"] as! Handbook.Chapter
+        if let index = handbooks.index(of: handbook) {
+            chapter.completed = true
+            let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! HandbookTableViewCell
+            cell.updateReadingProgress()
+        }
+        
+        if segmentedControl.selectedSegmentIndex == HandbookViewScetion.download.rawValue {
+            updateLocalHandbookScheme()
+        }
+    }
+    
+    //save handbook to local disk when received this notification
+    func saveHandbookStructure(notification: Notification) {
+        let handbook = notification.userInfo!["handbook"] as! Handbook
+        downloads.append(handbook)
+        updateLocalHandbookScheme()
+    }
+    
+    private func updateLocalHandbookScheme() {
+        NSKeyedArchiver.archiveRootObject(downloads, toFile: Handbook.ArchivePath.path)
+    }
+    
+    
     func jumpToChapter(notification: Notification) {
         let targetPath = notification.userInfo!
         let handbook   = targetPath["handbook"] as! Handbook

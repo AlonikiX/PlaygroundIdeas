@@ -10,6 +10,8 @@ import UIKit
 
 class PDFViewController: UIViewController, UIWebViewDelegate, UIGestureRecognizerDelegate {
 
+    var networkHelper = NetworkReachabilityHelper.shared
+    
     var pageData : Any?
     var mode  = 0
     var index = NSNotFound
@@ -31,6 +33,24 @@ class PDFViewController: UIViewController, UIWebViewDelegate, UIGestureRecognize
         
         webView.delegate                       = self
         webView.alpha                          = 0
+        
+        networkHelper.observe(by: self, handle: #selector(reachabilityChanged))
+    }
+    
+    func reachabilityChanged(notification: Notification) {
+        if mode == 0 {
+            let reachability = notification.object as! Reachability
+            
+            switch reachability.connection {
+            case .wifi:
+                break
+            //            print("Reachable via WiFi")
+            case .cellular:
+                showAlert(title: "Warning", message: "You are using cellular data (mobile data).")
+            case .none:
+                showAlert(title: "Error", message: "Network is invailable, please connect to the internet first.")
+            }
+        }
     }
     
     fileprivate func renderContent() {
@@ -46,6 +66,11 @@ class PDFViewController: UIViewController, UIWebViewDelegate, UIGestureRecognize
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        if mode == 0 && networkHelper.connection == .cellular  {
+            showAlert(title: "Warning", message: "You are using cellular data (mobile data).")
+        }
+        
         renderContent()
     }
     
@@ -62,11 +87,6 @@ class PDFViewController: UIViewController, UIWebViewDelegate, UIGestureRecognize
     
     func tap(_ sender: UITapGestureRecognizer) {
         hideBars = !hideBars
-        self.tabBarController?.setTabBarVisible(visible: !hideBars, duration: 0.3, animated: true)
-        UIView.animate(withDuration: 0.3) {
-            self.webView.setNeedsDisplay()
-            self.webView.layoutIfNeeded()
-        }
         UIApplication.shared.setStatusBarHidden(hideBars, with: .fade)
         self.navigationController?.setNavigationBarHidden(hideBars, animated: true)
         webView.updateConstraints()

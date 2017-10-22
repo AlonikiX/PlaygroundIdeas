@@ -11,6 +11,28 @@ import SSZipArchive
 
 class HTTPHelper: NSObject, URLSessionDownloadDelegate {
     private var downloadDestination : URL?
+    private var completion : () -> () = {}
+    private var errorHandle : () -> () = {}
+    private var progressHandle : (Float) -> () = {_ in }
+    
+    override init() {
+        super.init()
+    }
+    
+    init(destination: URL, completion: @escaping () -> ()) {
+        self.downloadDestination = destination
+        self.completion = completion
+    }
+    
+    convenience init(destination: URL, completion: @escaping () -> (), errorHandle: @escaping () -> ()) {
+        self.init(destination: destination, completion: completion)
+        self.errorHandle = errorHandle
+    }
+    
+    convenience init(destination: URL, progressHandle : @escaping (Float) -> (), completion: @escaping () -> (), errorHandle: @escaping () -> ()) {
+        self.init(destination: destination, completion: completion, errorHandle: errorHandle)
+        self.progressHandle = progressHandle
+    }
     
     public func handleHTTPResponse(data: Data?, response: URLResponse?, error: Error?,
                                    successAction: (() -> Void),
@@ -38,39 +60,35 @@ class HTTPHelper: NSObject, URLSessionDownloadDelegate {
         
     }
     
-    func download(fileAtURL url: URL, to destination: URL) {
-        self.downloadDestination = destination
-        
-        let config = URLSessionConfiguration.background(withIdentifier: "Download Task")
-        
-        // create session by instantiating with configuration and delegate
-        let session = Foundation.URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue.main)
-        
-        let downloadTask = session.downloadTask(with: url as URL)
-        
-        downloadTask.resume()
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        progressHandle(progress)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        let destinationDirectory =  self.downloadDestination as! URL
-        
-        // Here you can move your downloaded file
-        do {
-            let fileDestination = destinationDirectory.appendingPathComponent(downloadTask.response!.suggestedFilename!)
-            
-            try FileManager().moveItem(at: location, to: fileDestination)
-            
-            SSZipArchive.unzipFile(atPath: fileDestination.path, toDestination: destinationDirectory.path)
-            
-            try FileManager().removeItem(at: fileDestination)
-            
-        }catch {
-            print("ERROR: Download file cannot be deployed correctly.")
+        if let destinationDirectory = self.downloadDestination {
+            // Here you can move your downloaded file
+            do {
+                let fileDestination = destinationDirectory.appendingPathComponent(downloadTask.response!.suggestedFilename!)
+                
+                try FileManager().moveItem(at: location, to: fileDestination)
+                
+                SSZipArchive.unzipFile(atPath: fileDestination.path, toDestination: destinationDirectory.path)
+                
+                try FileManager().removeItem(at: fileDestination)
+                
+                self.completion()
+                
+            }catch {
+                print("ERROR: Download file cannot be deployed correctly.")
+            }
         }
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        print("completed: ERROR: \(error.debugDescription).")
+        if error != nil {
+            errorHandle()
+        }
     }
 }

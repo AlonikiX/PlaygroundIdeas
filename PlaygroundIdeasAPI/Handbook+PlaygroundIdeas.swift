@@ -8,10 +8,10 @@
 
 import Foundation
 
+///This file includes all the APIs for Handbooks section
 extension PlaygroundIdeas {
     static let baseHandbookURI = "http://swen90014v-2017plq.cis.unimelb.edu.au/handbook/"
     static let handbookResourcesURI = "http://swen90014v-2017plq.cis.unimelb.edu.au/wp-content/uploads/handbook/"
-    static let downloadFileFormat = ".zip"
     
     public class HandbookAPI : NSObject {
         static public func requestHandbooks(userID: Int, finished: @escaping (Data?, URLResponse?, Error?) -> Void) {
@@ -49,9 +49,16 @@ extension PlaygroundIdeas {
             }
         }
         
-        static public func downloadLink(of handbookSlag: String) -> URL {
-            let link  = handbookResourcesURI + handbookSlag + downloadFileFormat
-            return URL(string: link)!
+        static public func download(handbook slag: String, delegate: URLSessionDownloadDelegate) {
+            let url  = URL(string: handbookResourcesURI + slag + downloadFileFormat)!
+            let config = URLSessionConfiguration.background(withIdentifier: "Download Task \(slag)")
+            
+            // create session by instantiating with configuration and delegate
+            let session = Foundation.URLSession(configuration: config, delegate: delegate, delegateQueue: OperationQueue.main)
+            
+            let downloadTask = session.downloadTask(with: url)
+            
+            downloadTask.resume()
         }
     }
 }

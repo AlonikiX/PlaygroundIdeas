@@ -29,6 +29,8 @@
     rightButton.frame = CGRectMake(0, 0, 100, 100);
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     [rightButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(downloadPDF:)
+          forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = rightItem;
     
 }
@@ -40,6 +42,8 @@
 //是否下载还是打开文件
 
 - (void)downloadPDF:(NSString *)downloadUrl{
+    
+    downloadUrl = @"https://playgroundideas.org/wp-content/uploads/design_step/Scoop%20and%20Shaft.PlaygroundIdeas.pdf";
     
     NSArray *array = [downloadUrl componentsSeparatedByString:@"/"]; //从字符/中分隔成多个元素的数组
     
@@ -120,6 +124,8 @@
     
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    
     
 //    [DataService downloadTaskWithURL:downLoadUrl completion:^(id result) {
 //        

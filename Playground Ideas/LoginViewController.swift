@@ -19,6 +19,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    let networkHelper = NetworkReachabilityHelper.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -27,7 +29,10 @@ class LoginViewController: UIViewController {
         
         signupButton.layer.cornerRadius = 5
         signupButton.clipsToBounds      = true
-        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,7 +46,17 @@ class LoginViewController: UIViewController {
      
      - parameter sender: the login button
      */
+    public func fuck(notification: Notification) {
+        print("fuck")
+    }
+    
     @IBAction func login(_ sender: Any) {
+        
+        guard networkHelper.connection != .none else {
+            showAlert(title: "Error", message: "Network is invailable, please connect to the internet first.")
+            return
+        }
+        
         let username = usernameTextField.text!
         let password = passwordTextField.text!
         
@@ -66,7 +81,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func forgotPassword(_ sender: UIButton) {
-        showBulletinBoard()
+        showAlert(title: "Under Construction", message: "This function will be implemented soon...")
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -12,10 +12,13 @@ public class PlaygroundIdeas: NSObject {
 //    static let baseAPIDomainURL = "http://localhost/wordpress/wp-json/api/v1/"
     static let baseAPIDomainURL = "http://swen90014v-2017plq.cis.unimelb.edu.au/wp-json/api/v1/"
     
+    static let downloadFileFormat = ".zip"
+    
     private override init() {
         super.init()
     }
     
+    //get the URLs of APIs
     static func getAPIURI(api: String) -> URL?{
         return URL(string: PlaygroundIdeas.baseAPIDomainURL + api)
     }

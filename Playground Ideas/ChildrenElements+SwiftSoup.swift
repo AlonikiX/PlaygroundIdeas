@@ -11,6 +11,17 @@ import SwiftSoup
 
 extension SwiftSoup {
     
+    static public func template(ofHTML html: String) -> String {
+//        do {
+//            let dom = try SwiftSoup.parse(html)
+//            let body = try dom.body()
+//            try  body!.html("")
+//        }catch {
+//            print("ERROR: cannot generate HTML template.")
+//        }
+        return ""
+    }
+    
     static public func separate(elementByID id: String, inHTML html: String) -> [String] {
         var pagesHTML : [String] = []
         do {
@@ -19,9 +30,11 @@ extension SwiftSoup {
             let children = container!.children()
             
             for child in children {
-                try container!.html(child.outerHtml())
-                let singlePageHTML = try dom.outerHtml()
+//                try container!.html(child.outerHtml())
+                let singlePageHTML = try dom.text()
                 pagesHTML.append(singlePageHTML)
+                try singlePageHTML.write(toFile: Handbook.ArchiveDirectory.appendingPathExtension("fuck").appendingPathExtension("html").path, atomically: true, encoding: .utf8)
+                print(singlePageHTML)
             }
             
             return pagesHTML

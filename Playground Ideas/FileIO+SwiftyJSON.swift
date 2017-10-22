@@ -12,11 +12,13 @@ import SwiftyJSON
 extension JSON {
     
     static public func saveJSON(of contents : [Any], to path: String) {
-        let jsonString = JSON(contents).description
-        let data = jsonString.data(using: .utf8)!
-        if let file = FileHandle(forWritingAtPath: path) {
-            file.write(data)
-        }
+        let json = JSON(contents)
+        let str = json.rawString()
+//        let jsonString = JSON(contents).description
+//        let data = jsonString.data(using: .utf8)!
+//        if let file = FileHandle(forWritingAtPath: path) {
+//            file.write(data)
+//        }
     }
     
     static public func loadJSON(from path: String) -> JSON? {

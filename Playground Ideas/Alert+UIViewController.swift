@@ -12,9 +12,9 @@ extension UIViewController {
     /**
      present a bulletin board to show more information
      */
-    public func showBulletinBoard() {
-        let alert = UIAlertController(title          : "Bulletin Board",
-                                      message        : "Under Construction!\nWe will implement this function soon.",
+    public func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title          : title,
+                                      message        : message,
                                       preferredStyle : .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)

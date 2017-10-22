@@ -53,21 +53,24 @@ class ChapterTableViewController: UITableViewController {
         return cellHeight
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChapterCell", for: indexPath) as! ChapterTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "ChapterCell", for: indexPath) as? ChapterTableViewCell
+        if cell == nil {
+            cell = ChapterTableViewCell(style: .default, reuseIdentifier: "ChapterCell")
+        }
         
         // Configure the cell...
         let chapter = handbook!.chapters[indexPath.row]
-        cell.chapterLabel.text = chapter.chapter
-        cell.statusLabel.isHidden = !chapter.completed
+        cell!.chapterLabel.text = chapter.chapter
+//        cell!.statusLabel.isHidden = !chapter.completed
         
         if indexPath.row % 2 == 0 {
-            cell.backgroundColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.05)
-            cell.chapterLabel.textColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.8)
+            cell!.chapterLabel.backgroundColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.05)
+            cell!.chapterLabel.textColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.8)
         }else {
-            cell.backgroundColor = UIColor.white
-            cell.chapterLabel.textColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.8)
+            cell!.chapterLabel.backgroundColor = UIColor.white
+            cell!.chapterLabel.textColor = UIColor(red: 0.847, green: 0.142, blue: 0.476, alpha: 0.8)
         }
-        return cell
+        return cell!
     }
  
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -75,4 +78,5 @@ class ChapterTableViewController: UITableViewController {
         NotificationCenter.default.post(name: NSNotification.Name("ReadChapter"), object: self, userInfo: ["handbook":handbook!, "chapter":indexPath.row, "startPage":chapter.startPage])
     }
 
+    
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+///This file includes all the APIs for Account Management section
 extension PlaygroundIdeas {
     public class Authentication: NSObject {
         static public func register(username: String, password: String) {

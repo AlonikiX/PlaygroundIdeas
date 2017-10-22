@@ -6,47 +6,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PlaygroundIdeasAPI/PlaygroundIdeas.swift"
-            timestampString = "528725832.746132"
+            filePath = "Playground Ideas/PDFPageViewController.swift"
+            timestampString = "530057660.203925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "makeHTTPURLRequest(method:url:params:)"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "finishChapter(userID:handbookID:chapterID:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static PlaygroundIdeasAPI.PlaygroundIdeas.makeHTTPURLRequest (method : PlaygroundIdeasAPI.HTTPMethods, url : Foundation.URL, params : Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.String&gt;&gt;) -&gt; Foundation.URLRequest"
-                  moduleName = "PlaygroundIdeasAPI"
+                  symbolName = "Playground_Ideas.PDFPageViewController.(finishChapter in _D2E8D76DDE3CB5DD97453BDBD878979D)(userID: Swift.Int, handbookID: Swift.Int, chapterID: Swift.Int) -&gt; ()"
+                  moduleName = "Playground Ideas"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/Courses/Semester%202/Master%20Project/project/2017-pl-quoll/PlaygroundIdeasAPI/PlaygroundIdeas.swift"
-                  timestampString = "528356218.387364"
+                  urlString = "file:///Users/apple/Documents/Courses/Semester%202/Master%20Project/project/2017-pl-quoll/Playground%20Ideas/PDFPageViewController.swift"
+                  timestampString = "530054661.091268"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "1648">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "488">
                </Location>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static PlaygroundIdeasAPI.PlaygroundIdeas.makeHTTPURLRequest (method : PlaygroundIdeasAPI.HTTPMethods, url : Foundation.URL, params : Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.String&gt;&gt;) -&gt; Foundation.URLRequest"
-                  moduleName = "PlaygroundIdeasAPI"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__ObjC.URLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Playground_Ideas.PDFPageViewController.(finishChapter in _D2E8D76DDE3CB5DD97453BDBD878979D)(userID: Swift.Int, handbookID: Swift.Int, chapterID: Swift.Int) -&gt; ()"
+                  moduleName = "Playground Ideas"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/Courses/Semester%202/Master%20Project/project/2017-pl-quoll/PlaygroundIdeasAPI/PlaygroundIdeas.swift"
-                  timestampString = "528356218.389918"
+                  urlString = "file:///Users/apple/Documents/Courses/Semester%202/Master%20Project/project/2017-pl-quoll/Playground%20Ideas/PDFPageViewController.swift"
+                  timestampString = "530054661.094203"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "1842">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "57">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -57,13 +57,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Playground Ideas/HTTPHelper.swift"
-            timestampString = "528988983.986182"
+            filePath = "Playground Ideas/HandbooksViewController.swift"
+            timestampString = "530057660.204717"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "urlSession(_:downloadTask:didFinishDownloadingTo:)"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "finishChapter(notification:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Playground Ideas/HandbooksViewController.swift"
+            timestampString = "530057660.205004"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Playground Ideas/HandbookTableViewCell.swift"
+            timestampString = "530054619.859668"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "download(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Playground Ideas/HandbooksViewController.swift"
+            timestampString = "530057660.205171"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "saveHandbookStructure(notification:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

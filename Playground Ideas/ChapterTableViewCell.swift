@@ -10,8 +10,8 @@ import UIKit
 
 class ChapterTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var chapterLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var chapterLabel: InsetUILabel!
+//    @IBOutlet weak var statusLabel: UILabel!
     
     
     override func awakeFromNib() {
@@ -23,6 +23,11 @@ class ChapterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
     }
 
 }

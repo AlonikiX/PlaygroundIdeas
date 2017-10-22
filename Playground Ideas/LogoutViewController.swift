@@ -11,13 +11,24 @@ import PlaygroundIdeasAPI
 
 class LogoutViewController: UIViewController {
 
+    let networkHelper = NetworkReachabilityHelper.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+    }
+    
     @IBAction func logout(_ sender: Any) {
+//        guard networkHelper.connection != .none else {
+//            showAlert(title: "Error", message: "Network is invailable, please connect to the internet first.")
+//            return
+//        }
+        
         let indicator = UIActivityIndicatorView()
         showActivity(indicator: indicator, block: true)
         
@@ -34,6 +45,7 @@ class LogoutViewController: UIViewController {
             }
         })
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

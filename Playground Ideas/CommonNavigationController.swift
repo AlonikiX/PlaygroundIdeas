@@ -14,7 +14,8 @@ class CommonNavigationController: UINavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let menuItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(switchToMenuView))
+        let menuItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(switchToMenuView))
+        menuItem.tintColor = UIColor.black
         self.navigationItem.rightBarButtonItem = menuItem
         
         for viewController in viewControllers {

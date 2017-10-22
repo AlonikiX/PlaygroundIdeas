@@ -35,12 +35,18 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
         }else {
             //download reading mode, prepare html for pages
             do {
-                var file = try FileManager().url(for: .documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: false)
-                file.appendPathComponent("handbook/" + readingPath!.handbook.slag)
-                print(file.path)
+                let slag = readingPath!.handbook.slag
+                let directory = Handbook.ArchiveDirectory.appendingPathComponent(slag)
+                var file = directory.appendingPathComponent(slag).appendingPathExtension("html")
+                
                 let baseURL = URL.init(fileURLWithPath: file.path)
                 let html = try String.init(contentsOf: baseURL)
-                pagesData = SwiftSoup.separate(elementByID: "page-container", inHTML: html)
+                
+                pagesData.append((html, directory))
+//                let pages = SwiftSoup.separate(elementByID: "page-container", inHTML: html)
+//                for page in pages {
+//                    pagesData.append((page, directory))
+//                }
                 
             }catch {
                 print("Error: Cannot load files!")
@@ -67,6 +73,16 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
 
+    fileprivate func finishChapter(userID: Int, handbookID: Int, chapterID: Int) {
+        if !readingChapter!.completed {
+            readingChapter!.completed = true
+            if readingMode == 0 {
+                PlaygroundIdeas.HandbookAPI.record(userID: userID, readingHandbook: handbookID, completedChapter: chapterID, finished: {_,_,_ in return})
+            }
+        }
+        NotificationCenter.default.post(name: NSNotification.Name("FinishChapter"), object: self, userInfo: ["handbook":readingPath!.handbook, "chapter":readingChapter!])
+    }
+    
     func viewControllerAtIndex(_ index: Int, storyboard: UIStoryboard) -> PDFViewController? {
         // Return the data view controller for the given index.
         if (self.pagesData.count == 0) || (index >= self.pagesData.count) {
@@ -76,22 +92,19 @@ class PDFPageViewController: UIPageViewController, UIPageViewControllerDelegate,
         // Create a new view controller and pass suitable data.
         let pdfViewController = storyboard.instantiateViewController(withIdentifier: "PDFViewController") as! PDFViewController
         pdfViewController.pageData = self.pagesData[index]
+        pdfViewController.mode = self.readingMode
         pdfViewController.index = index
         
-        if let currentChapter = readingPath!.handbook.getChapter(by: index) {
-            if readingChapter !== currentChapter {
-                if !readingChapter!.completed {
-                    readingChapter!.completed = true
-                    PlaygroundIdeas.HandbookAPI.record(userID: User.currentUser.id!, readingHandbook: readingPath!.handbook.id, completedChapter: readingChapter!.id, finished: {_,_,_ in return})
+        if NetworkReachabilityHelper.shared.connection != .none {
+            if let currentChapter = readingPath!.handbook.getChapter(by: index) {
+                if readingChapter !== currentChapter {
+                    finishChapter(userID: User.currentUser.id!, handbookID: readingPath!.handbook.id, chapterID: readingChapter!.id)
+                    readingChapter = currentChapter
                 }
-                readingChapter = currentChapter
             }
-        }
-        
-        if index == pagesData.count - 1 {
-            if !readingChapter!.completed {
-                readingChapter!.completed = true
-                PlaygroundIdeas.HandbookAPI.record(userID: User.currentUser.id!, readingHandbook: readingPath!.handbook.id, completedChapter: readingChapter!.id, finished: {_,_,_ in return})
+            
+            if index == pagesData.count - 1 {
+                finishChapter(userID: User.currentUser.id!, handbookID: readingPath!.handbook.id, chapterID: readingChapter!.id)
             }
         }
         currentVC = pdfViewController

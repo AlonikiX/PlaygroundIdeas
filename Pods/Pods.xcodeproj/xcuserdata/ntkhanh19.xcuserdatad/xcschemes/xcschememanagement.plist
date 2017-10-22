@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>ExpandableCell.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>HGCircularSlider.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -19,6 +29,16 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>SSZipArchive.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>SwiftSoup.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -27,6 +47,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01E9FE51F89215D0FFFCF2A90DD7B4B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>08E8B33DFBBFE1932717B533DCCF5493</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0B080DDB786E657BC48320E4096038D7</key>
 		<dict>
 			<key>primary</key>
@@ -52,6 +82,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>6BB70E78BE732895C1875B33F157CBEE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>75646BE0820B9109A7AC05B732E5F98C</key>
 		<dict>
 			<key>primary</key>
@@ -68,6 +103,16 @@
 			<true/>
 		</dict>
 		<key>DBA6001481CEA0EBA031CC5C94508FAA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1AC58AE1D1DA78F2559C68ED68FD392</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E85BCE660799AF9E21AFE0B710E05BCE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
